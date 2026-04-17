@@ -1,0 +1,216 @@
+{
+  "generated": "2026-04-15",
+  "dfb_standard_check": {
+    "active": true,
+    "rule": "Safety-critical lines (Warning, Danger, flashover, backdraught, etc.) are wrapped in blockquotes prefixed with \u26a0\ufe0f SAFETY \u2014 Action > Condition > Standard",
+    "format": "Action > Condition > Standard"
+  },
+  "chunks": [
+    {
+      "file": "01_scba_equipment.md",
+      "pages": "1\u201311",
+      "size_kb": 28.5,
+      "summary": "Describes the Scott ProPak-fx Self-Contained Breathing Apparatus (SCBA) used by Dublin Fire Brigade, including its technical specifications, weight, pressure settings, and component descriptions."
+    },
+    {
+      "file": "02_ancillary_equipment.md",
+      "pages": "12\u201335",
+      "size_kb": 10.8,
+      "summary": "Covers all ancillary BA equipment including safety torches, personal lines, the Bodyguard 1000 DSX personal distress signal unit (PDSU), TETRA/NMAC radio communications, and the Drager Parat 5520/5550 escape smoke hood."
+    },
+    {
+      "file": "03_physiology_and_cylinder_duration.md",
+      "pages": "36\u201342",
+      "size_kb": 1.8,
+      "summary": "Explains the physiology of human respiration relevant to BA operations, and provides the formulas and worked examples for calculating cylinder capacity, full duration, working duration, and turn-around pressure."
+    },
+    {
+      "file": "04_ba_search_procedures.md",
+      "pages": "43\u201360",
+      "size_kb": 33.3,
+      "summary": "Details the full Dublin Fire Brigade BA search procedures including team movement in risk areas, left/right hand search techniques, door procedures, stair and ladder navigation, contents gauge checks, withdrawal protocols, lost-in-smoke procedures, and casualty handling techniques."
+    },
+    {
+      "file": "05_compartment_fire_behaviour.md",
+      "pages": "61\u201389",
+      "size_kb": 46.0,
+      "summary": "Covers fire science fundamentals including combustion, flammability limits, fire development in ventilated and under-ventilated compartments, flashover, backdraught, fire gas ignition (FGI), heat transfer, compartment procedures, gas cooling, and fire extinguishment techniques."
+    },
+    {
+      "file": "06_ventilation_and_ppv.md",
+      "pages": "90\u2013101",
+      "size_kb": 11.2,
+      "summary": "Explains ventilation principles and methods used by DFB including natural, hydraulic, forced, and Positive Pressure Ventilation (PPV), covering fan placement, exhaust vent creation, airflow management, and command and control procedures \u2014 noting that Offensive PPV is not currently permitted by DFB (2024)."
+    },
+    {
+      "file": "07_rtc_introduction_and_fire_service_role.md",
+      "pages": "8\u201319",
+      "size_kb": 18.0,
+      "summary": "Introduces the DFB Road Traffic Collision handbook, covering RTC philosophy, the casualty-centred golden hour approach, team coordination, pre-planning, relevant legislation, and the respective roles of Dublin Fire Brigade, An Garda S\u00edoch\u00e1na, and the HSE at RTC incidents."
+    },
+    {
+      "file": "08_rtc_equipment.md",
+      "pages": "20\u201347",
+      "size_kb": 28.0,
+      "summary": "Describes all RTC rescue equipment used by DFB including the Holmatro PowerShore hydraulic system, Lukas battery-powered cutters/spreaders/rams, ancillary tools (sill supports, pulling chains, LX claws, ratchet straps, Paratech stabilisation struts, reciprocating saw, impact wrench), EV-specific tools (fire blanket, SnakE4 drenching system, EV emergency plug), the Tirfor winch, and lifting mats."
+    },
+    {
+      "file": "09_vehicle_construction.md",
+      "pages": "48\u201359",
+      "size_kb": 18.7,
+      "summary": "Covers car construction terminology, traditional vs modern vehicle design, structural components (posts, pillars, roofs, doors), safety systems including airbags/SRS, seatbelt pre-tensioners, ROPS, anti-whiplash seats, vehicle electrical systems, battery locations, and electrical isolation procedures at incidents."
+    },
+    {
+      "file": "10_alternative_fuel_vehicles.md",
+      "pages": "60\u201369",
+      "size_kb": 12.5,
+      "summary": "Details the hazards and procedures for dealing with alternative fuel vehicles at RTCs, including BEV, PHEV, HEV electric vehicles, EV fires (including charging fires), Dublin Bus EVs, LNG/CNG/LPG gas-fuelled vehicles with associated hazards, and hydrogen fuel cell vehicles."
+    },
+    {
+      "file": "11_heavy_goods_vehicles.md",
+      "pages": "70\u201383",
+      "size_kb": 16.8,
+      "summary": "Covers DFB procedures for RTCs involving HGVs including rigid and articulated vehicles, fifth-wheel couplings, braking systems, air suspension, HGV stabilisation, buses and coaches (fuel shut-off, stability), and refrigerated vehicles."
+    },
+    {
+      "file": "12_agricultural_and_heavy_machinery.md",
+      "pages": "84\u201393",
+      "size_kb": 18.2,
+      "summary": "Covers RTC procedures for agricultural and industrial vehicles including tractors, crawlers, forklifts, two-wheel/all-wheel/tracked/articulating drive vehicles, tyre explosion hazards for large vehicles, and the anatomy of industrial and agricultural machinery relevant to extrication."
+    },
+    {
+      "file": "13_rtc_procedures.md",
+      "pages": "94\u2013109",
+      "size_kb": 27.1,
+      "summary": "Details the full DFB RTC operational procedure including mobilising, arrival, approach, appliance positioning, traffic safety, preliminary and inner circle surveys, plan of action, crew roles, working zones, tool staging, motorway/dual-carriageway incidents, scene preservation, make-up, and de-brief."
+    },
+    {
+      "file": "14_rescue_and_extrication_techniques.md",
+      "pages": "110\u2013122",
+      "size_kb": 16.2,
+      "summary": "Describes DFB vehicle extrication techniques including vehicle stabilisation methods, primary roof removal, side entry, side fold-down, B-post rip, forced pedal pull, dash roll, boot entry, roof fold-down, and procedures for vehicles on their roofs."
+    },
+    {
+      "file": "15_lukas_ewxt_battery_tools.md",
+      "pages": "0\u201320",
+      "size_kb": 7.9,
+      "summary": "Describes the LUKAS battery-powered hydraulic rescue tools used by DFB at RTCs, including the SP 555 eWXT Spreaders, S 378 eWXT Cutters, and 521 eWXT Rams, covering safety precautions, PPE requirements, component identification, technical specifications, and operating procedures."
+    },
+    {
+      "file": "16_cafs_fundamentals_foam_branches.md",
+      "pages": "0\u201331",
+      "size_kb": 15.3,
+      "summary": "Introduces the Compressed Air Foam System (CAFS) as used by DFB, covering the definition and applications, Class B foam use at 3% and 6%, how CAFS extinguishes fire, jet/spray branch-pipes, safety implications for firefighters, Dublin Tunnel CAFS procedures overview, and the Smart CAFS 100 system on DN14A1."
+    },
+    {
+      "file": "17_cafs_dn14a1_pump_operations.md",
+      "pages": "32\u201354",
+      "size_kb": 18.1,
+      "summary": "Covers the pump control system and CAFS operation on the DN14A1 (2021) appliance, including the Prima P2B pump overview, water/foam tank configuration, Smart CAFS 100, pump bay controls, foam pump activation, PTO engagement, and step-by-step operational procedures."
+    },
+    {
+      "file": "18_cafs_dn14a5_operations.md",
+      "pages": "55\u201392",
+      "size_kb": 21.6,
+      "summary": "Details CAFS system operation for DN14A5 (Reserve) and DN15A5R appliances including Smart CAFS control interface, pump water and CAFS controls, foam solution selection, PTO procedures, compressor protection, and operator guides for both appliance variants."
+    },
+    {
+      "file": "19_cafs_dn14a5_2019_and_smart_cafs.md",
+      "pages": "93\u2013136",
+      "size_kb": 30.2,
+      "summary": "Covers the DN14A5 2019 Smart CAFS 200 and DN14A5 (191D) pump systems, Smart CAFS interface controls (3%/6% pre-sets, water-only, flushing), precautions when switching firefighting media, safety controls, CAFS research principles, and the Delta Attack CAFS lance."
+    },
+    {
+      "file": "20_pump_hydraulics.md",
+      "pages": "3\u201326",
+      "size_kb": 19.2,
+      "summary": "Covers the hydraulics fundamentals required for DFB fire pump operations, including properties of water, hydrostatics vs hydrokinetics, atmospheric pressure, head pressure, friction loss principles and calculations, jet reaction, nozzle discharge, water hammer, and tank volume calculations."
+    },
+    {
+      "file": "21_pump_types.md",
+      "pages": "27\u201380",
+      "size_kb": 47.4,
+      "summary": "Describes all pump types used in DFB fire appliances including positive displacement pumps, ejector pumps, centrifugal pumps, multi-stage and peripheral pumps, World Series/Prima pumps, and priming systems, covering their construction, operating principles, and fire service applications."
+    },
+    {
+      "file": "22_pump_gauges_meters_branches.md",
+      "pages": "81\u2013116",
+      "size_kb": 27.3,
+      "summary": "Covers pump gauges and instrumentation, flow meters and practical benefits of flow vs pressure delivery, standard and specialist branch-pipes, monitors and their application, including technical specifications and operational guidance for DFB pump operators."
+    },
+    {
+      "file": "23_pump_practical_operations_relays.md",
+      "pages": "117\u2013148",
+      "size_kb": 36.6,
+      "summary": "Details practical pump operation procedures for DFB appliances, water relay techniques, relay pump calculations, and the Round-the-Pump Proportioning (RTPP) system for foam delivery."
+    },
+    {
+      "file": "24_pump_cafs_foam_portable_water_supplies.md",
+      "pages": "149\u2013190",
+      "size_kb": 38.5,
+      "summary": "Covers compressed air foam systems (CAFS) and foam introduction from the pump operator perspective, standard pump tests and procedures, portable pump types and operation, water supplies and distribution including hydrants, open water sources, and water distribution calculations."
+    },
+    {
+      "file": "25_water_rescue_principles_hydrology_flooding.md",
+      "pages": "5\u201351",
+      "size_kb": 76.2,
+      "summary": "Covers Rescue 3 rescue philosophy and training standards, best practice guidelines for water rescue, communications, hydrology fundamentals (river features, current dynamics, hydraulics), flood theory, floodwater dynamics, and hazards relevant to DFB water rescue operations."
+    },
+    {
+      "file": "26_water_rescue_medical_and_equipment.md",
+      "pages": "52\u2013109",
+      "size_kb": 91.7,
+      "summary": "Covers medical and decontamination considerations at water rescues including falling-in response, defining drowning, waterborne illnesses, hypothermia, hyperthermia, CPR for drowned victims, in-water casualty management, personal and team rescue equipment, knots and anchor systems, and tensioning/mechanical advantage systems."
+    },
+    {
+      "file": "27_water_rescue_techniques.md",
+      "pages": "110\u2013143",
+      "size_kb": 46.6,
+      "summary": "Describes swiftwater and flood rescue techniques including swiftwater swimming, strainer swim, shallow water techniques, talk/reach/throw conditional rescues, belay systems, tethered rescue, inflated fire hose use, line crossing methods, continuous loop, tensioned diagonals, people and equipment entrapments, and low-angle litter management."
+    },
+    {
+      "file": "28_water_rescue_boats_and_incident_management.md",
+      "pages": "144\u2013181",
+      "size_kb": 67.1,
+      "summary": "Covers paddle boat handling, tethered boat operations, boat wraps, flips and righting techniques, incident pre-planning, risk assessments, incident size-up, and incident management and site control procedures for water and flood rescue operations."
+    },
+    {
+      "file": "29_water_rescue_specialist_operations.md",
+      "pages": "182\u2013216",
+      "size_kb": 65.6,
+      "summary": "Covers specialist water rescue scenarios including night/poor visibility operations, searching rivers and floods, animal rescue considerations, canals and locks, weir (low head dam) rescue, mud/ice/unstable surface rescues, vehicles in water, helicopter familiarisation, and personal and team equipment lists."
+    }
+  ],
+  "sources": [
+    {
+      "file": "Recruit BA student notes.pdf",
+      "pages": 101,
+      "topic": "Breathing Apparatus"
+    },
+    {
+      "file": "RTC Student Manual 2025.pdf",
+      "pages": 124,
+      "topic": "Road Traffic Collisions"
+    },
+    {
+      "file": "LUKAS eWXT.pdf",
+      "pages": 21,
+      "topic": "LUKAS Battery Rescue Tools"
+    },
+    {
+      "file": "DFB CAFS Course.pdf",
+      "pages": 137,
+      "topic": "Compressed Air Foam Systems"
+    },
+    {
+      "file": "Pump Manual V 7.1.pdf",
+      "pages": 191,
+      "topic": "Fire Pump Operations"
+    },
+    {
+      "file": "Water-and-Flood-Rescue-Manual-v21.0.pdf",
+      "pages": 217,
+      "topic": "Water and Flood Rescue"
+    }
+  ]
+}

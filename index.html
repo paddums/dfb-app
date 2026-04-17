@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>DFB Training Assistant</title>
+  <style>
+    :root {
+      --red:      #C0392B;
+      --red-dark: #96281B;
+      --red-glow: rgba(192,57,43,0.25);
+      --bg:       #111214;
+      --surface:  #1C1E21;
+      --surface2: #242629;
+      --border:   rgba(255,255,255,0.07);
+      --text:     #EAEAEA;
+      --muted:    #7A7D84;
+      --safe:     #27AE60;
+      --warn-bg:  rgba(230,126,34,0.15);
+      --warn-bdr: #E67E22;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      height: 100%;
+      height: 100dvh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* ═══════════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════════ */
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════ */
+    header {
+      flex-shrink: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .header-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--red);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 12px var(--red-glow);
+    }
+
+    .header-text h1 {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: #fff;
+    }
+
+    .header-text p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 1px;
+      letter-spacing: 0.1px;
+    }
+
+    .status-dot {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .status-dot::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--safe);
+      box-shadow: 0 0 6px var(--safe);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    .status-dot.offline::before {
+      background: #E74C3C;
+      box-shadow: 0 0 6px #E74C3C;
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    /* ═══════════════════════════════════════════
+       CHAT AREA
+    ═══════════════════════════════════════════ */
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      scroll-behavior: smooth;
+    }
+
+    #chat::-webkit-scrollbar { width: 4px; }
+    #chat::-webkit-scrollbar-track { background: transparent; }
+    #chat::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* ─── Welcome card ─── */
+    .welcome-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .welcome-card .icon { font-size: 36px; margin-bottom: 10px; }
+
+    .welcome-card h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .welcome-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ─── Suggestion chips ─── */
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 14px;
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      text-align: left;
+    }
+
+    .chip:hover  { background: #2e3035; border-color: var(--red); }
+    .chip:active { transform: scale(0.97); }
+
+    /* ─── Messages ─── */
+    .row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .row.user  { align-items: flex-end; }
+    .row.bot   { align-items: flex-start; }
+
+    .label {
+      font-size: 11px;
+      color: var(--muted);
+      padding: 0 4px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .bubble {
+      max-width: min(82%, 560px);
+      padding: 13px 16px;
+      border-radius: 18px;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .row.user .bubble {
+      background: var(--red);
+      color: #fff;
+      border-bottom-right-radius: 5px;
+    }
+
+    .row.bot .bubble {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 5px;
+      color: var(--text);
+    }
+
+    /* ─── Bot answer formatting ─── */
+    .bubble h2, .bubble h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin: 10px 0 6px;
+    }
+
+    .bubble h2:first-child, .bubble h3:first-child { margin-top: 0; }
+
+    .bubble p { margin-bottom: 8px; }
+    .bubble p:last-child { margin-bottom: 0; }
+
+    .bubble ul, .bubble ol {
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    .bubble li { margin-bottom: 5px; }
+
+    .bubble strong { color: #fff; font-weight: 600; }
+
+    .bubble code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-family: "SF Mono", monospace;
+    }
+
+    /* Safety callout */
+    .safety-block {
+      background: var(--warn-bg);
+      border-left: 3px solid var(--warn-bdr);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 13px;
+      margin: 10px 0;
+      font-size: 14px;
+      color: #F0A868;
+    }
+
+    .safety-block strong { color: #F5B041; }
+
+    /* Formula block */
+    .formula {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-family: "SF Mono", "Courier New", monospace;
+      font-size: 14px;
+      margin: 8px 0;
+      color: #A8D8A8;
+    }
+
+    /* ─── Source tags ─── */
+    .sources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .source-tag {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .source-tag::before {
+      content: '📄';
+      font-size: 10px;
+    }
+
+    /* ─── Typing indicator ─── */
+    .typing-row { align-items: flex-start; }
+
+    .typing-bubble {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      border-bottom-left-radius: 5px;
+      padding: 14px 18px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 7px; height: 7px;
+      background: var(--muted);
+      border-radius: 50%;
+      animation: bounce 1.3s ease-in-out infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.18s; }
+    .dot:nth-child(3) { animation-delay: 0.36s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.6; }
+      40%            { transform: translateY(-7px); opacity: 1; }
+    }
+
+    /* ═══════════════════════════════════════════
+       INPUT
+    ═══════════════════════════════════════════ */
+    .input-area {
+      flex-shrink: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    #question {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 12px 18px;
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      resize: none;
+      max-height: 130px;
+      outline: none;
+      line-height: 1.45;
+      transition: border-color 0.2s;
+    }
+
+    #question:focus     { border-color: rgba(192,57,43,0.6); }
+    #question::placeholder { color: var(--muted); }
+
+    #send-btn {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: var(--red);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+      box-shadow: 0 2px 10px var(--red-glow);
+    }
+
+    #send-btn:hover    { background: var(--red-dark); box-shadow: 0 4px 16px var(--red-glow); }
+    #send-btn:active   { transform: scale(0.93); }
+    #send-btn:disabled { background: #333; box-shadow: none; cursor: not-allowed; }
+    #send-btn svg      { width: 18px; height: 18px; fill: white; }
+
+    /* ─── Follow-up suggestion chips ─── */
+    .followups {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      padding-left: 2px;
+    }
+
+    .followup-chip {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 5px 12px;
+      font-size: 12px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+      text-align: left;
+    }
+
+    .followup-chip::before {
+      content: '→ ';
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    .followup-chip:hover  { background: var(--surface2); border-color: rgba(192,57,43,0.4); color: var(--text); }
+    .followup-chip:active { transform: scale(0.97); }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (min-width: 700px) {
+      #chat { padding: 28px 10%; }
+      .input-area { padding: 14px 10%; }
+    }
+
+    @media (min-width: 1100px) {
+      #chat { padding: 32px 18%; }
+      .input-area { padding: 14px 18%; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-icon">🚒</div>
+    <div class="header-text">
+      <h1>DFB Training Assistant</h1>
+      <p id="header-subtitle">Dublin Fire Brigade Training</p>
+    </div>
+    <div class="status-dot" id="status-dot">Live</div>
+  </header>
+
+  <!-- CHAT -->
+  <div id="chat">
+    <div class="welcome-card" id="welcome">
+      <div class="icon">🔥</div>
+      <h2>Dublin Fire Brigade Training</h2>
+      <p id="welcome-desc">Ask any question from your DFB training manuals. Answers are sourced directly from the material.</p>
+      <div class="suggestions" id="starter-chips">
+        <!-- populated dynamically from /topics -->
+      </div>
+    </div>
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-area">
+    <textarea id="question" rows="1"
+      placeholder="Ask a question about BA or RTC procedures…"
+      onkeydown="handleKey(event)"></textarea>
+    <button id="send-btn" onclick="sendQuestion()" title="Send">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+
+</div>
+
+<script>
+  // ── Config ──────────────────────────────────────────────────────
+  const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:'
+    ? 'http://localhost:5001/ask'
+    : '/ask';   // relative URL when deployed — server handles both
+
+  const chat    = document.getElementById('chat');
+  const input   = document.getElementById('question');
+  const btn     = document.getElementById('send-btn');
+  const welcome = document.getElementById('welcome');
+  const status  = document.getElementById('status-dot');
+
+  // ── Load starter chips from manifest ───────────────────────────
+  const TOPICS_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:5001/topics'
+    : '/topics';
+
+  (async () => {
+    try {
+      const res  = await fetch(TOPICS_URL);
+      const data = await res.json();
+      const container = document.getElementById('starter-chips');
+      if (data.chips && data.chips.length) {
+        // Update header subtitle and welcome text to reflect loaded topics
+        const topicNames = data.chips.map(c => c.topic);
+        document.getElementById('header-subtitle').textContent = topicNames.join(' · ');
+        document.getElementById('welcome-desc').textContent =
+          `Ask any question across ${topicNames.length} DFB training topics. Answers come directly from your training manuals.`;
+
+        data.chips.forEach(({ question }) => {
+          const chip = document.createElement('div');
+          chip.className = 'chip';
+          chip.textContent = question;
+          chip.onclick = () => ask(question);
+          container.appendChild(chip);
+        });
+      }
+    } catch (_) {
+      // Server not reachable — leave chips empty
+    }
+  })();
+
+  // ── Auto-resize textarea ────────────────────────────────────────
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 130) + 'px';
+  });
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendQuestion(); }
+  }
+
+  function ask(text) { input.value = text; sendQuestion(); }
+
+  // ── Message rendering ───────────────────────────────────────────
+  function addMessage(content, type, sources, suggestions) {
+    const row = document.createElement('div');
+    row.className = `row ${type}`;
+
+    if (type === 'user') {
+      const lbl = document.createElement('div');
+      lbl.className = 'label';
+      lbl.textContent = 'You';
+      row.appendChild(lbl);
+
+      const bub = document.createElement('div');
+      bub.className = 'bubble';
+      bub.textContent = content;
+      row.appendChild(bub);
+    } else {
+      const lbl = document.createElement('div');
+      lbl.className = 'label';
+      lbl.textContent = 'DFB Assistant';
+      row.appendChild(lbl);
+
+      const bub = document.createElement('div');
+      bub.className = 'bubble';
+      bub.innerHTML = renderMarkdown(content);
+
+      if (sources && sources.length) {
+        const src = document.createElement('div');
+        src.className = 'sources';
+        sources.forEach(s => {
+          const tag = document.createElement('div');
+          tag.className = 'source-tag';
+          tag.textContent = s.replace(/^\d+_/, '').replace(/_/g, ' ').replace('.md', '');
+          src.appendChild(tag);
+        });
+        bub.appendChild(src);
+      }
+
+      row.appendChild(bub);
+
+      // Follow-up suggestion chips
+      if (suggestions && suggestions.length) {
+        const followups = document.createElement('div');
+        followups.className = 'followups';
+        suggestions.forEach(s => {
+          const chip = document.createElement('div');
+          chip.className = 'followup-chip';
+          chip.textContent = s;
+          chip.onclick = () => ask(s);
+          followups.appendChild(chip);
+        });
+        row.appendChild(followups);
+      }
+    }
+
+    chat.appendChild(row);
+    chat.scrollTop = chat.scrollHeight;
+    return row;
+  }
+
+  function addTyping() {
+    const row = document.createElement('div');
+    row.className = 'row bot typing-row';
+    row.id = 'typing';
+    const lbl = document.createElement('div');
+    lbl.className = 'label';
+    lbl.textContent = 'DFB Assistant';
+    const bub = document.createElement('div');
+    bub.className = 'typing-bubble';
+    bub.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+    row.appendChild(lbl);
+    row.appendChild(bub);
+    chat.appendChild(row);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function removeTyping() {
+    const el = document.getElementById('typing');
+    if (el) el.remove();
+  }
+
+  // ── Markdown → HTML ─────────────────────────────────────────────
+  function renderMarkdown(text) {
+    const lines = text.split('\n');
+    let html = '';
+    let inList = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i];
+
+      // Safety callouts
+      if (line.includes('⚠️') || /^>\s*/.test(line)) {
+        if (inList) { html += '</ul>'; inList = false; }
+        const clean = line.replace(/^>\s*/, '').replace(/⚠️\s*/g, '').trim();
+        if (clean) {
+          html += `<div class="safety-block">⚠️ <strong>Safety Note:</strong> ${inline(clean)}</div>`;
+        }
+        continue;
+      }
+
+      // Headings
+      if (/^###\s/.test(line)) {
+        if (inList) { html += '</ul>'; inList = false; }
+        html += `<h3>${inline(line.slice(4))}</h3>`;
+        continue;
+      }
+      if (/^##\s/.test(line)) {
+        if (inList) { html += '</ul>'; inList = false; }
+        html += `<h2>${inline(line.slice(3))}</h2>`;
+        continue;
+      }
+      if (/^#\s/.test(line)) {
+        if (inList) { html += '</ul>'; inList = false; }
+        html += `<h2>${inline(line.slice(2))}</h2>`;
+        continue;
+      }
+
+      // Formula detection (lines with = and variable names)
+      if (/^[A-Z]\s*=\s*/.test(line) || /^D\s*=/.test(line) || /^C\s*=/.test(line)) {
+        if (inList) { html += '</ul>'; inList = false; }
+        html += `<div class="formula">${escHtml(line)}</div>`;
+        continue;
+      }
+
+      // Lists
+      if (/^[-•*]\s/.test(line)) {
+        if (!inList) { html += '<ul>'; inList = true; }
+        html += `<li>${inline(line.replace(/^[-•*]\s/, ''))}</li>`;
+        continue;
+      }
+      if (/^\d+\.\s/.test(line)) {
+        if (!inList) { html += '<ol>'; inList = true; }
+        html += `<li>${inline(line.replace(/^\d+\.\s/, ''))}</li>`;
+        continue;
+      }
+
+      if (inList) { html += '</ul>'; inList = false; }
+
+      if (line.trim() === '') {
+        html += '';
+      } else {
+        html += `<p>${inline(line)}</p>`;
+      }
+    }
+
+    if (inList) html += '</ul>';
+    return html;
+  }
+
+  function inline(text) {
+    return escHtml(text)
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g,     '<em>$1</em>')
+      .replace(/`(.+?)`/g,       '<code>$1</code>');
+  }
+
+  function escHtml(t) {
+    return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ── Send ─────────────────────────────────────────────────────────
+  async function sendQuestion() {
+    const q = input.value.trim();
+    if (!q) return;
+
+    if (welcome) { welcome.style.display = 'none'; }
+
+    input.value = '';
+    input.style.height = 'auto';
+    btn.disabled = true;
+
+    addMessage(q, 'user');
+    addTyping();
+
+    try {
+      const res  = await fetch(API_URL, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ question: q }),
+      });
+
+      const data = await res.json();
+      removeTyping();
+      status.className = 'status-dot';
+      status.textContent = 'Live';
+
+      if (data.error) {
+        addMessage('⚠️ ' + data.error, 'bot');
+      } else {
+        addMessage(data.answer, 'bot', data.sources, data.suggestions);
+      }
+
+    } catch (err) {
+      removeTyping();
+      status.className = 'status-dot offline';
+      status.textContent = 'Offline';
+      addMessage('Could not reach the server. Make sure the app is running.', 'bot');
+    }
+
+    btn.disabled = false;
+    input.focus();
+    chat.scrollTop = chat.scrollHeight;
+  }
+</script>
+</body>
+</html>

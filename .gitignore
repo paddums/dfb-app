@@ -1,0 +1,12 @@
+# Never upload the API key to GitHub
+.env
+
+# Mac system files
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+
+# PDF source documents (keep locally only)
+*.pdf

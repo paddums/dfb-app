@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: dfb-training-assistant
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false   # You will paste this in the Render dashboard — it stays secret
