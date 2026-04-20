@@ -46,8 +46,8 @@ No vector database. Just smart keyword routing against a manifest of chunk summa
 
 ## How to Add a New PDF (the right way)
 
-1. Put the PDF in the `DFB app` folder
-2. Run: `python3 ingest.py "My New Manual.pdf" --topic "Topic Name"`
+1. Put the PDF in the `reference_pdfs/` folder
+2. Run: `python3 ingest.py "reference_pdfs/My New Manual.pdf" --topic "Topic Name"`
 3. Script extracts text, writes the `.md` chunk file, updates `manifest.json`, and generates a summary using Claude API
 4. Open `app.py` and add relevant keywords to `TOPIC_HINTS` for the new subject
 5. Upload the new `.md` file + updated `manifest.json` + `app.py` to GitHub → Render auto-redeploys
@@ -89,7 +89,7 @@ Render picks it up automatically on push.
 ### Option C — Run ingest.py locally, upload outputs manually
 *Best for: processing new PDFs without touching git*
 
-1. Run `python3 ingest.py "NewManual.pdf" --topic "Subject Name"` locally
+1. Run `python3 ingest.py "reference_pdfs/NewManual.pdf" --topic "Subject Name"` locally
 2. The script writes `knowledge/30_new_chunk.md` and updates `manifest.json`
 3. In GitHub web UI, upload the new `.md` file (drag-and-drop works) and paste the updated `manifest.json`
 4. Add keywords to `TOPIC_HINTS` in `app.py` (Option A above)

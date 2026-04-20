@@ -10,3 +10,4 @@ __pycache__/
 
 # PDF source documents (keep locally only)
 *.pdf
+reference_pdfs/

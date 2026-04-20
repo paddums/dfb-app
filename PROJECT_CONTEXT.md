@@ -40,7 +40,13 @@ DFB app/
 │   ├── 01_scba_equipment.md
 │   ├── ...
 │   └── 29_water_rescue_specialist_operations.md
-└── [source PDFs — local only, not in GitHub]
+└── reference_pdfs/           # Source PDFs — local only, not in GitHub
+    ├── Recruit BA student notes.pdf
+    ├── RTC Student Manual 2025.pdf
+    ├── LUKAS eWXT.pdf
+    ├── DFB CAFS Course.pdf
+    ├── Pump Manual V 7.1.pdf
+    └── Water-and-Flood-Rescue-Manual-v21.0.pdf
 ```
 
 ---
